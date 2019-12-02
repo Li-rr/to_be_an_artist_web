@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
+    <p class="col-md-6"><button class="btn btn-primary">测试按钮</button></p>
     <router-view/>
   </div>
 </template>

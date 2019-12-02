@@ -18,7 +18,7 @@ def gen_f_poetry(request):
 
     # 加载数据
     int_text, vocab_to_int,int_to_vocab = \
-        pickle.load(open(cur_path+"\\backend\\fuck_poe\\preprocess.p"))
+        pickle.load(open(cur_path+"\\backend\\fuck_poe\\preprocess.p",mode='rb'))
 
     # 加载模型
     gen_network = poetry_network(vocab_size=len(int_to_vocab),batch_size=1)

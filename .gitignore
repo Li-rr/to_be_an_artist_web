@@ -1,0 +1,13 @@
+# ----过滤前端相关文件
+#frontend/build/
+#frontend/node_modules/
+#frontend/test/
+#!frontend/config/*.js
+#!frontend/static/.gitkeep
+*.pyc
+# ----过滤后端相关文件
+backend/fuck_poe/data/
+backend/fuck_poe/poetry_models
+backend/fuck_poe/preprocess.p
+
+

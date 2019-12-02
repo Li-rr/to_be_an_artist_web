@@ -55,8 +55,8 @@ ROOT_URLCONF = 'to_be_an_artist_web.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')]
-        ,
+        #'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS' : [os.path.join(BASE_DIR,'frontend\\dist')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -67,6 +67,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+# Add for vuejs
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "frontend/dist/static"),
 ]
 
 WSGI_APPLICATION = 'to_be_an_artist_web.wsgi.application'

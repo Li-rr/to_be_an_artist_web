@@ -16,8 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.views.generic import TemplateView
+from backend import views as back_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',TemplateView.as_view(template_name='index.html')),
+    path(r'api/',back_view.index,name='index'),
+    path(r'api/gen/',back_view.gen_f_poetry,name='gen'),
 ]

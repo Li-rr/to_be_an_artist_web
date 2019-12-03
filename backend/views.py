@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 import json,sys,os
 import pickle
+from backend.models import Users
 # Create your views here.
 
 from backend.fuck_poe.network_model import poetry_network
@@ -30,3 +31,18 @@ def gen_f_poetry(request):
         rule=7,sentence_lines=4,hidden_head=keywords
     )
     return HttpResponse(poem)
+
+def logon(request):
+    username = request.POST['username']
+    passwod = request.POST['passwod']
+    print('--->',username,type(username))
+    print('--->',passwod,type(passwod))
+
+    user = Users.objects.filter(username=username)
+    if user:
+        print("用户名唯一")
+        new_user = Users()
+        Users.objects.create(username=username,passward=passwod)
+        return HttpResponse("注册成功")
+    else:
+        return HttpResponse("注册失败")

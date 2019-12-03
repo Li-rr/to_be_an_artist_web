@@ -25,12 +25,13 @@ SECRET_KEY = '9$8ht@_e7e1z6v&+w)dypi_f54+6=ab_3_xd2bwx8_1xfz)d=r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'corsheaders',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,6 +53,7 @@ MIDDLEWARE = [
 ]
 # 解决跨域问题
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
 ROOT_URLCONF = 'to_be_an_artist_web.urls'
 
 TEMPLATES = [
@@ -131,3 +133,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+APPEND_SLASH=False

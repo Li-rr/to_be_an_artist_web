@@ -40,7 +40,7 @@
                   <span class="input-group-text">密码：</span>
                 </div>
                 <div class=" ">
-                  <input type="text" class="form-control" v-model="logon_pass1" placeholder="请输入密码">
+                  <input type="password" class="form-control" v-model="logon_pass1" placeholder="请输入密码">
                 </div>
               </div>
               <div class="input-group mb-3 ">
@@ -48,7 +48,7 @@
                   <span class="input-group-text  ">确认密码：</span>
                 </div>
                 <div class="">
-                  <input type="text" class="form-control" v-model="logon_pass2" placeholder="请在输入一边密码">
+                  <input type="password" class="form-control" v-model="logon_pass2" placeholder="请在输入一边密码">
                 </div>
               </div>
             </form>
@@ -121,9 +121,9 @@ export default {
     name: 'App',
     data(){
       return{
-        logon_user : "",
-          logon_pass1 : "",
-          logon_pass2 :"",
+        logon_user : "lqx",
+          logon_pass1 : "123",
+          logon_pass2 :"123",
       }
     },
     methods:{
@@ -133,18 +133,41 @@ export default {
               alert("两次密码不匹配")
           }else{
               alert("输入密码正确")
-              axios.post('/api/logon',
+
+              // axios.get('/api/token/').then(response=>{
+              //     var cookie_data = response.data['token'];
+              //     this.post_a(cookie_data)
+              // })
+              axios.post('/api/logon/',
                   {
-                      username:this.username,
-                      passward:this.passward
-                  }
+                      username:this.logon_user,
+                      passward:this.logon_pass1
+                  },
+                  {headers:{'X-CSRFToken' : this.getCookie('csrftoken')}}
               ).then(res=>{
                   console.log(res)  // 请求成功打印res
               }).catch(err =>{
                   alert(err)  // 弹出错误信息
               })
           }
-      }
+      },
+        post_a: function (CSRFToken) {
+            axios.post("/api/logon/",{
+                username:this.username,
+                passward:this.passward
+            },{
+                headers:{'X-CSRFToken':CSRFToken}
+            }).then(res=>{
+                console.log(res)  // 请求成功打印res
+            }).catch(err=>{
+                console.log(err)  // 请求失败打印err
+            })
+        },
+        getCookie:function (name) {
+          var value = '; '+document.cookie;
+          var parts = value.split('; '+name+'=');
+          if(parts.length===2) return parts.pop().split(';').shift()
+        }
     },
     components:{
       First

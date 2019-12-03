@@ -10,5 +10,7 @@
 backend/fuck_poe/data/
 backend/fuck_poe/poetry_models
 backend/fuck_poe/preprocess.p
+backend/fuck_poe
+poetry_models
 
 

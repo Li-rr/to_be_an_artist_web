@@ -133,40 +133,25 @@ export default {
               alert("两次密码不匹配")
           }else{
               alert("输入密码正确")
-
-              // axios.get('/api/token/').then(response=>{
-              //     var cookie_data = response.data['token'];
-              //     this.post_a(cookie_data)
-              // })
               axios.post('/api/logon/',
                   {
                       username:this.logon_user,
                       passward:this.logon_pass1
                   },
-                  {headers:{'X-CSRFToken' : this.getCookie('csrftoken')}}
-              ).then(res=>{
-                  console.log(res)  // 请求成功打印res
-              }).catch(err =>{
+                  {headers:{'X-CSRFToken' : this.getCookie('csrftoken'),
+                      'Content-Type':'application/json'}}
+              ).then(this.getSuccessInfo).catch(err =>{
                   alert(err)  // 弹出错误信息
               })
           }
       },
-        post_a: function (CSRFToken) {
-            axios.post("/api/logon/",{
-                username:this.username,
-                passward:this.passward
-            },{
-                headers:{'X-CSRFToken':CSRFToken}
-            }).then(res=>{
-                console.log(res)  // 请求成功打印res
-            }).catch(err=>{
-                console.log(err)  // 请求失败打印err
-            })
-        },
         getCookie:function (name) {
           var value = '; '+document.cookie;
           var parts = value.split('; '+name+'=');
           if(parts.length===2) return parts.pop().split(';').shift()
+        },
+        getSuccessInfo:function (response) {
+          alert(response.data + ' fuck you too')
         }
     },
     components:{

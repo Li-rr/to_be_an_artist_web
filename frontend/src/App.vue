@@ -117,7 +117,24 @@
   // 引入组件
   import First from "./components/First";
 export default {
-  name: 'App',
+    name: 'App',
+    data(){
+      return{
+        logon_user : "",
+          logon_pass1 : "",
+          logon_pass2 :"",
+      }
+    },
+    methods:{
+      logon:function () {
+          console.log(this.logon_user+" "+this.logon_pass1+" "+this.logon_pass2)
+          if (this.logon_pass1 != this.logon_pass2){
+              alert("两次密码不匹配")
+          }else{
+              alert("输入密码正确")
+          }
+      }
+    },
     components:{
       First
     }

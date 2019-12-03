@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse
 from django.middleware.csrf import get_token
+from django.shortcuts import redirect
 import json,sys,os
 import pickle
 from backend.models import Users
@@ -36,19 +37,32 @@ def gen_f_poetry(request):
 
 def token(request):
     token = get_token(request=request)
-    return JsonResponse(token)
+    return JsonResponse(token,safe=False)
 
 def logon(request):
-    username = request.POST['username']
-    passwod = request.POST['passwod']
-    print('--->',username,type(username))
-    print('--->',passwod,type(passwod))
+    if request.method == "POST":
+        print('fuck you')
 
-    user = Users.objects.filter(username=username)
-    if user:
-        print("用户名唯一")
-        new_user = Users()
-        Users.objects.create(username=username,passward=passwod)
-        return HttpResponse("注册成功")
-    else:
-        return HttpResponse("注册失败")
+        postBody = request.body
+        json_result = json.loads(postBody)
+        username = json_result['username']
+        password = json_result['passward']
+
+        print("=>",username,password)
+        print('=>',postBody)
+        print('=>',request.POST)
+        user = Users.objects.filter(username=username)
+        if user:
+            print("用户已存在")
+            return HttpResponse("用户名已存在")
+        else:
+            # 创建用户
+            new_user = Users()
+            new_user.username = username
+            new_user.passward = password
+            new_user.save()
+            return HttpResponse("注册成功")
+
+def login(request):
+
+    return HttpResponse("fuck you")

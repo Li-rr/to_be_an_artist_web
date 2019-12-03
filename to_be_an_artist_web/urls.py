@@ -25,4 +25,5 @@ urlpatterns = [
     path(r'api/gen/',back_view.gen_f_poetry,name='gen'),
     path(r'api/logon/',back_view.logon,name='logon'),
     path(r'api/token/',back_view.token,name='token'),
+    path(r'api/login/',back_view.login,name='login'),
 ]

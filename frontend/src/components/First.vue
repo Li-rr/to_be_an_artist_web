@@ -54,7 +54,7 @@
             geneary: function () {
                 this.message = '生成中。。。'
                 alert(this.title);
-                axios.get('/api/gen', {
+                axios.get('/api/gen/', {
                     params: {
                         title: this.title
                     }

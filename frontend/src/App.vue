@@ -116,6 +116,7 @@
 <script>
   // 引入组件
   import First from "./components/First";
+  import axios from "axios";
 export default {
     name: 'App',
     data(){
@@ -132,6 +133,16 @@ export default {
               alert("两次密码不匹配")
           }else{
               alert("输入密码正确")
+              axios.post('/api/logon',
+                  {
+                      username:this.username,
+                      passward:this.passward
+                  }
+              ).then(res=>{
+                  console.log(res)  // 请求成功打印res
+              }).catch(err =>{
+                  alert(err)  // 弹出错误信息
+              })
           }
       }
     },

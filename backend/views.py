@@ -1,8 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,JsonResponse
+from django.middleware.csrf import get_token
 import json,sys,os
 import pickle
 from backend.models import Users
+import json
 # Create your views here.
 
 from backend.fuck_poe.network_model import poetry_network
@@ -31,6 +33,10 @@ def gen_f_poetry(request):
         rule=7,sentence_lines=4,hidden_head=keywords
     )
     return HttpResponse(poem)
+
+def token(request):
+    token = get_token(request=request)
+    return JsonResponse(token)
 
 def logon(request):
     username = request.POST['username']

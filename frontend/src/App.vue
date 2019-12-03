@@ -57,7 +57,7 @@
           <!-- 模态框底部 -->
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-info" v-on:click="logon">提交</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button id="logon_close" type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
           </div>
 
         </div>
@@ -84,7 +84,7 @@
                   <span class="input-group-text ">用户名：</span>
                 </div>
                 <div class="">
-                  <input type="text" class="form-control "  placeholder="请输入用户名">
+                  <input type="text" class="form-control" v-model="login_user"  placeholder="请输入用户名">
                 </div>
               </div>
               <div class="input-group mb-3">
@@ -92,7 +92,7 @@
                   <span class="input-group-text">密码：</span>
                 </div>
                 <div class=" ">
-                  <input type="text" class="form-control "  placeholder="请输入密码">
+                  <input type="text" class="form-control" v-model="login_passwd"  placeholder="请输入密码">
                 </div>
               </div>
             </form>
@@ -100,7 +100,7 @@
 
           <!-- 模态框底部 -->
           <div class="modal-footer">
-            <button type="button" class="btn btn-outline-info">提交</button>
+            <button type="button" class="btn btn-outline-info" v-on:click="login">提交</button>
             <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
           </div>
 
@@ -151,7 +151,9 @@ export default {
           if(parts.length===2) return parts.pop().split(';').shift()
         },
         getSuccessInfo:function (response) {
-          alert(response.data + ' fuck you too')
+          alert("注册成功")
+          $('#logon_close').click();
+          $('#login').click();
         }
     },
     components:{

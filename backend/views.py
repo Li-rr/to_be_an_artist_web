@@ -64,5 +64,37 @@ def logon(request):
             return HttpResponse("注册成功")
 
 def login(request):
+    if request.method == "POST":
+        print('fuck you login')
 
-    return HttpResponse("fuck you")
+        postBody = request.body
+        json_result = json.loads(postBody)
+        username = json_result['username']
+        password = json_result['passward']
+        print("=>", username, password)
+
+        user = Users.objects.get(username=username)
+        if user.username == username and user.passward == password:
+            print("FUCK YOUS")
+            print("==>",request.session.session_key)
+            request.session['username'] = username
+            request.session['passwd'] = password
+            res_dict = dict(
+                status =1,
+                session_id = request.session.session_key
+            )
+            return redirect('/api/user/')
+            #return HttpResponse("登录成功")
+        else:
+            res_dict = dict(
+                status = 0
+            )
+            return JsonResponse(res_dict)
+
+def user(request):
+    username = request.session['username']
+    res_dict = dict(
+        status = 1,
+        username = username
+    )
+    return JsonResponse(res_dict)

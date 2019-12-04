@@ -6,6 +6,7 @@ import json,sys,os
 import pickle
 from backend.models import Users,UserGen
 import json
+import re
 # Create your views here.
 
 from backend.fuck_poe.network_model import poetry_network
@@ -133,4 +134,34 @@ def quit(request):
     res_dict = dict(
         status= status
     )
+    return JsonResponse(res_dict)
+def queryAll(request):
+    status = 0
+    user = request.GET.get('username')
+    print('查询的用户',user)
+
+    try:
+        poem_result = UserGen.objects.all().filter(username=user)
+        print(poem_result,type(poem_result))
+        poem_list = []
+        for poem in poem_result:
+            _, title,content = poem.getData()
+            content = content.replace(' ', '')
+            #print(title,content)
+            poem = re.split('，|。',content)
+            #print(content.replace(' ','').split('， 。'))
+            #print(title,poem,type(title),type(poem))
+            poem.insert(0,title)
+            print(poem)
+            poem_list.append(poem)
+        status = 4
+    except Exception as e:
+        print(e)
+        status = 5
+
+    res_dict = dict(
+        status = status,
+        poem = poem_list
+    )
+    #res_dict['poem'] = poem_list
     return JsonResponse(res_dict)

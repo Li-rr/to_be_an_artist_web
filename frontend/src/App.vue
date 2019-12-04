@@ -3,12 +3,13 @@
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark row">
       <div class="col-sm-6 col-md-8 col-lg-10"><a class="navbar-brand ">To be an artist</a></div>
       <div class="col-sm-6 col-md-4 col-lg-2  ">
-        <button class="btn btn-outline-info justify-content-end" id="login" data-toggle="modal"
+        <button class="btn btn-outline-info justify-content-end" v-show="displayLoginBtn" id="login" data-toggle="modal"
                 data-target="#login-modal">登录
         </button>
-        <button class="btn btn-outline-info justify-content-end" id="logon" data-toggle="modal"
+        <button class="btn btn-outline-info justify-content-end" v-show="displayLoginBtn" id="logon" data-toggle="modal"
                 data-target="#logon-modal">注册
         </button>
+        <button class="btn btn-outline-info justify-content-end" v-show="!displayLoginBtn" id="quiet" data-toggle="modal">退出</button>
       </div>
     </nav>
        <!--    组件位置-->
@@ -110,6 +111,8 @@
 <!--    这里是分隔线-->
     <!-- 引入组件 fuck you vue-->
     <first :childFirst="login_user"></first>
+    <!--    引入组件 User-->
+    <user :childUser="deal_user" :childUserName="login_user"></user>
     <router-view/>
   </div>
 </template>
@@ -129,7 +132,10 @@ export default {
           login_user : "",
           login_passwd: "123",
           msg:"fuck you",
-          childFirst: "fuck"
+          childFirst: "fuck",
+          deal_user:"",
+          displayQuitBtn: false,
+          displayLoginBtn: true
       }
     },
     methods:{
@@ -186,7 +192,10 @@ export default {
                 //alert("登录成功");
 
                 $('#login_close').click();  //关闭模态框
-                this.$router.push('/user?username='+this.login_user); //页面重定向
+                this.deal_user = true
+                console.log("deal_user  "+this.deal_user)
+                this.displayLoginBtn = false
+                //this.$router.push('/user?username='+this.login_user); //页面重定向
             }else if(response.data.status==0){
                 alert("登录失败，用户名或密码错误")
             }

@@ -9,7 +9,7 @@
         <button class="btn btn-outline-info justify-content-end" v-show="displayLoginBtn" id="logon" data-toggle="modal"
                 data-target="#logon-modal">注册
         </button>
-        <button class="btn btn-outline-info justify-content-end" v-show="!displayLoginBtn" id="quiet" data-toggle="modal">退出</button>
+        <button class="btn btn-outline-info justify-content-end" v-show="!displayLoginBtn" id="quiet" v-on:click="quiet">退出</button>
       </div>
     </nav>
        <!--    组件位置-->
@@ -200,7 +200,27 @@ export default {
                 alert("登录失败，用户名或密码错误")
             }
             console.log(response)
-        }
+        },
+        quiet:function () {
+            alert(this.login_user)
+            axios.get('/api/quit/',{
+                params:{
+                    username: this.login_user
+                }
+            }).then(res=>{
+                console.log(res)
+                if(res.data.status == 2){
+                    this.displayLoginBtn = true
+                    this.deal_user = false
+                    alert("退出成功")
+                }else if(res.data.status == 3){
+                    alert("退出遇到点问题，请关闭浏览器")
+                }
+            }).catch(err=>{
+                alert("遇到了点问题。。")
+            })
+        },
+
     },
     components:{
       First,

@@ -7,3 +7,8 @@ class Users(models.Model):
 
     def __str__(self):
         return self.username
+
+class UserGen(models.Model):
+    username = models.CharField(max_length=30)
+    content = models.CharField(max_length=300)
+    title = models.CharField(max_length=30)

@@ -4,7 +4,7 @@ from django.middleware.csrf import get_token
 from django.shortcuts import redirect
 import json,sys,os
 import pickle
-from backend.models import Users
+from backend.models import Users,UserGen
 import json
 # Create your views here.
 
@@ -96,5 +96,24 @@ def user(request):
     res_dict = dict(
         status = 1,
         username = username
+    )
+    return JsonResponse(res_dict)
+
+def save(request):
+    # 首先检查是否登录
+    #username = request.session['username']
+    title = request.GET.get('title')
+    content = request.GET.get('content')
+    user = request.GET.get('user')
+    print("--->",user)
+    print("--->",title)
+    print("===>",content)
+    new_content = UserGen()
+    new_content.username = user
+    new_content.title = title
+    new_content.content = content
+    new_content.save()
+    res_dict = dict(
+        status = 1
     )
     return JsonResponse(res_dict)

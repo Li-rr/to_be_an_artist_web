@@ -26,4 +26,6 @@ urlpatterns = [
     path(r'api/logon/',back_view.logon,name='logon'),
     path(r'api/token/',back_view.token,name='token'),
     path(r'api/login/',back_view.login,name='login'),
+    path(r'api/user/',back_view.user,name='user'),
+    path(r'api/save/',back_view.save,name='save'),
 ]

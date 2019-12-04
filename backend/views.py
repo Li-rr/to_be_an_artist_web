@@ -117,3 +117,12 @@ def save(request):
         status = 1
     )
     return JsonResponse(res_dict)
+
+
+def quit(request):
+    user = request.GET.get('username')
+    del request.sessio[str(user)]
+    res_dict = dict(
+        status=2
+    )
+    return JsonResponse(res_dict)

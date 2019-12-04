@@ -28,4 +28,5 @@ urlpatterns = [
     path(r'api/login/',back_view.login,name='login'),
     path(r'api/user/',back_view.user,name='user'),
     path(r'api/save/',back_view.save,name='save'),
+    path(r'api/quit/',back_view.quit,name='quit'),
 ]

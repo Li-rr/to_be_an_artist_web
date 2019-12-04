@@ -12,3 +12,7 @@ class UserGen(models.Model):
     username = models.CharField(max_length=30)
     content = models.CharField(max_length=300)
     title = models.CharField(max_length=30)
+    def __str__(self):
+        return self.username
+    def getData(self):
+        return self.username,self.title,self.content

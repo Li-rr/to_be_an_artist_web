@@ -144,24 +144,37 @@ def queryAll(request):
         poem_result = UserGen.objects.all().filter(username=user)
         print(poem_result,type(poem_result))
         poem_list = []
+        title_list = []
+        complete_poen = []
         for poem in poem_result:
             _, title,content = poem.getData()
             content = content.replace(' ', '')
             #print(title,content)
-            poem = re.split('，|。',content)
+            poem = content.replace('，','\n')
+            poem = poem.replace('。','\n')
+            #poem = re.split('，|。',content)
             #print(content.replace(' ','').split('， 。'))
             #print(title,poem,type(title),type(poem))
-            poem.insert(0,title)
             print(poem)
+            #poem.insert(0,title)
+            print(poem)
+            title_list.append(title)
             poem_list.append(poem)
+            complete_poen.append([title,poem])
+
         status = 4
     except Exception as e:
         print(e)
         status = 5
 
+
     res_dict = dict(
         status = status,
-        poem = poem_list
+        poem = poem_list,
+        title = title_list,
+        c_poem = complete_poen
     )
+
+
     #res_dict['poem'] = poem_list
     return JsonResponse(res_dict)

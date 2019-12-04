@@ -108,6 +108,8 @@
     </div>
     <!--    这里是分隔线-->
 <!--    这里是分隔线-->
+    <!-- 引入组件 fuck you vue-->
+    <first :childFirst="login_user"></first>
     <router-view/>
   </div>
 </template>
@@ -124,9 +126,10 @@ export default {
         logon_user : "lqx",
           logon_pass1 : "123",
           logon_pass2 :"123",
-          login_user : "lqx",
+          login_user : "",
           login_passwd: "123",
-          msg:"fuck you"
+          msg:"fuck you",
+          childFirst: "fuck"
       }
     },
     methods:{

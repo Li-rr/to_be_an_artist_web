@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Fuck: {{childFirst}}</h1>
     <div class="container">
       <div id="input" class="from">
         <div class="row">
@@ -28,8 +29,20 @@
         <h3 class="bg-info text-white text-center" >生成结果</h3>
       </div>
       <div id="output" class="text-center">
-             <h1> 标题：{{title}}</h1>
-      <p v-model="message">{{message}}</p>
+        <table class="table">
+        <thead>
+        <tr><th><h1> 标题：{{title}}</h1></th></tr>
+        </thead>
+          <tbody>
+          <tr>
+            <td>
+              <p v-model="message">{{message}}</p>
+            </td>
+          </tr>
+          <tr> <td><button class="btn btn-outline-secondary" v-show="show" v-on:click="save">保存</button></td></tr>
+          </tbody>
+        </table>
+
       </div>
 
     </div>
@@ -47,7 +60,8 @@
                 title: '',
                 message: '',
                 genre: '1',
-                holder: '请输入关键词'
+                holder: '请输入关键词',
+                show: false
             }
         },
         methods: {
@@ -63,7 +77,26 @@
             getGeninfo: function (res) {
                 console.log(res)
                 this.message = res.data
+                this.show=true
             },
+            save: function () {
+                alert(this.childFirst)
+                if(this.childFirst == "")
+                {
+                    alert("请先登录")
+                }
+                else{
+                    axios.get('/api/save/',{
+                        params:{
+                            title: this.title,
+                            content: this.message,
+                            user: this.childFirst
+                        }
+                    }).then(res=>{
+                        console.log(res)
+                    })
+                }
+            }
         },
         watch: {
             genre: function () {
@@ -73,6 +106,11 @@
                     this.holder = "请输入1~4个字"
 
             }
+        },
+        props:['childFirst'],
+        //生命周期函数
+        mounted() {
+            //alert(this.childFirst)
         }
     };
 </script>

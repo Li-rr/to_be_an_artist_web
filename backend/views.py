@@ -125,8 +125,12 @@ def save(request):
 def quit(request):
     user = request.GET.get('username')
     print("quit=>",user)
-    del request.session[str(user)]
+    try:
+        request.session.clear()
+        status = 2
+    except Exception as e:
+        status = 3
     res_dict = dict(
-        status=2
+        status= status
     )
     return JsonResponse(res_dict)

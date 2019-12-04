@@ -76,12 +76,15 @@ def login(request):
         user = Users.objects.get(username=username)
         if user.username == username and user.passward == password:
             print("FUCK YOUS")
-            print("==>",request.session.session_key)
+
+            session_id = request.session.get(username)
+            request.session[username] = username
+            print("==>", session_id)
             request.session['username'] = username
             request.session['passwd'] = password
             res_dict = dict(
                 status =1,
-                session_id = request.session.session_key
+                session_id = session_id
             )
             return redirect('/api/user/')
             #return HttpResponse("登录成功")
@@ -121,7 +124,8 @@ def save(request):
 
 def quit(request):
     user = request.GET.get('username')
-    del request.sessio[str(user)]
+    print("quit=>",user)
+    del request.session[str(user)]
     res_dict = dict(
         status=2
     )

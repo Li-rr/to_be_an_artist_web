@@ -11,7 +11,6 @@
         </button>
       </div>
     </nav>
-
        <!--    组件位置-->
     <!--  注册模态框-->
     <div class="modal fade" id="logon-modal">
@@ -84,7 +83,7 @@
                   <span class="input-group-text ">用户名：</span>
                 </div>
                 <div class="">
-                  <input type="text" class="form-control" v-model="login_user"  placeholder="请输入用户名">
+                  <input type="text"  class="form-control" v-model="login_user"  placeholder="请输入用户名">
                 </div>
               </div>
               <div class="input-group mb-3">
@@ -92,7 +91,7 @@
                   <span class="input-group-text">密码：</span>
                 </div>
                 <div class=" ">
-                  <input type="text" class="form-control" v-model="login_passwd"  placeholder="请输入密码">
+                  <input type="password" class="form-control" v-model="login_passwd"  placeholder="请输入密码">
                 </div>
               </div>
             </form>
@@ -101,7 +100,7 @@
           <!-- 模态框底部 -->
           <div class="modal-footer">
             <button type="button" class="btn btn-outline-info" v-on:click="login">提交</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button id="login_close" type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
           </div>
 
         </div>
@@ -116,6 +115,7 @@
 <script>
   // 引入组件
   import First from "./components/First";
+  import User from "./components/User";
   import axios from "axios";
 export default {
     name: 'App',
@@ -124,6 +124,9 @@ export default {
         logon_user : "lqx",
           logon_pass1 : "123",
           logon_pass2 :"123",
+          login_user : "lqx",
+          login_passwd: "123",
+          msg:"fuck you"
       }
     },
     methods:{
@@ -150,15 +153,47 @@ export default {
           var parts = value.split('; '+name+'=');
           if(parts.length===2) return parts.pop().split(';').shift()
         },
+        setCookie:function(name,value,days){
+          var exp = new Date();
+          exp.setTime(exp.getTime() + days*24*60*60*1000);
+          document.cookie = name + "="+escape(value)+";expires="+exp.toGMTstring();
+        },
         getSuccessInfo:function (response) {
           alert("注册成功")
           $('#logon_close').click();
           $('#login').click();
+        },
+        login:function () {
+          alert(this.login_user+"=="+this.login_passwd);
+          axios.post('/api/login/',{
+              username: this.login_user,
+              passward: this.login_passwd
+          }, {
+              headers:{'Content-Type':'application/json'}}
+          ).then(this.getLoginSuccess).catch(err => {
+              console.log("这里是错误信息")
+              console.log(err)
+          })
+        },
+        getLoginSuccess: function (response) {
+            //alert("session_id",response.data.session_id)
+            //alert(typeof(response.data.status))
+            if (response.data.status==1)
+            {
+                //alert("登录成功");
+
+                $('#login_close').click();  //关闭模态框
+                this.$router.push('/user?username='+this.login_user); //页面重定向
+            }else if(response.data.status==0){
+                alert("登录失败，用户名或密码错误")
+            }
+            console.log(response)
         }
     },
     components:{
-      First
-    }
+      First,
+      User
+    },
 }
 </script>
 

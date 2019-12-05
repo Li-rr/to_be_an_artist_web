@@ -6,7 +6,7 @@
         <tr>
           <th>欢迎用户：</th>
           <th>{{childUserName}}</th>
-          <th><button class="btn btn-primary" v-on:click="queryAll">点击查询</button></th>
+          <th><button id="queryAll" class="btn btn-primary" v-on:click="queryAll">点击查询</button></th>
         </tr>
         </thead>
           <tbody>
@@ -48,7 +48,7 @@
         <!-- 模态框底部 -->
         <div class="modal-footer">
           <button type="button" class="btn btn-outline-primary" v-on:click="edit_submit_btn">提交</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+          <button id="edit_btn_dismiss" type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
         </div>
 
       </div>
@@ -67,13 +67,15 @@
               title_list: "",
               modal_title:"",
               modal_content: "",
-              edit_content: ""
+              edit_content: "", // 用于修改的古诗
+              id_list: "",
+              edit_index: "",   // 用于记录古诗的ID
 
           }
         },
         methods:{
             queryAll:function () {
-                alert(this.childUserName)
+                //alert(this.childUserName)
                 axios.get('/api/queryAll/',{
                     params:{
                         username: this.childUserName
@@ -81,9 +83,10 @@
                 }).then(res => {
                     console.log(res.data)
                     if(res.data.status == 4){
-                      alert("查询成功");
+                      //alert("查询成功");
                       this.poem_list = res.data.c_poem;
                       this.title_list = res.data.title;
+                      this.id_list = res.data.id_list
                       console.log(res.data)
                     }else if(res.data.status == 5){
                         alert("出了点问题")
@@ -112,10 +115,29 @@
                 this.modal_title = p_content[0]
                 this.modal_content = fuck_poem_container
                 this.edit_content = p_content[1]
+                this.edit_index = this.id_list[index]
+                //alert('这是古诗编号: '+this.edit_index)
                 //alert("这里是编辑按钮=》",index)
             },
             edit_submit_btn:function () {
-                alert(this.edit_content)
+                //alert("古诗内容："+this.edit_content+"\n"+"古诗编号："+this.edit_index)
+                axios.post('/api/isave/',{
+                    p_content: this.edit_content,
+                    p_index: this.edit_index
+                },{
+                    headers: {'Content-Type':'application/json'}
+                }).then(this.getSuccessInfo).catch(err=>{
+                    console.log(err); // 打印错误信息
+                })
+            },
+            getSuccessInfo:function (res) {
+                if(res.data.status==6){
+                    //alert("修改成功")
+                    $('#edit_btn_dismiss').click();
+                    $('#queryAll').click();
+                }else if(res.data.status==7){
+                    alert("我们遇到了一点问题")
+                }
             }
         },
         mounted() {
@@ -127,7 +149,7 @@
         watch: {
             // 监听属性
             childUser:function (newVal,oldVal) {
-                alert('新值 '+newVal + ' 旧值 '+oldVal)
+                //alert('新值 '+newVal + ' 旧值 '+oldVal)
             }
         }
 

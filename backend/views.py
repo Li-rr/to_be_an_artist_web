@@ -175,7 +175,8 @@ def queryAll(request):
         status = status,
         poem = poem_list,
         title = title_list,
-        c_poem = complete_poen
+        c_poem = complete_poen,
+        id_list = id_list
     )
 
 
@@ -183,16 +184,28 @@ def queryAll(request):
     return JsonResponse(res_dict)
 
 def isave(request):
-    user = request.GET.get('username')
-    result_set = UserGen.objects.all()\
-        .values_list().filter(id=2)
-    complete_poem = []
-    id_list = []
-    for poem in result_set:
-        id,_,content,title = poem
-        print(poem)
-        print(id,content,title)
+    if request.method == "POST":
+        print("fuck you this is isave")
+        postBody = request.body
+        json_result = json.loads(postBody)
+        p_content = json_result['p_content']
+        p_index = json_result['p_index']
+
+        try:
+            result = UserGen.objects.get(id=p_index)
+            # print(result.title)
+            # print(result.content)
+            # print('--------------->')
+            # print(p_content)
+
+            result.content = p_content
+            result.save()
+            status = 6
+
+            print(result)
+        except Exception as e:
+            status = 7
     res_dict = dict(
-        status = 6
+        status = status
     )
-    return HttpResponse("hello")
+    return JsonResponse(res_dict)

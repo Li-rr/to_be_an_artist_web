@@ -175,7 +175,7 @@
             },
             // 监听是否退出
             childQuitUser:function (newVal,oldVal) {
-                alert('这里是User组件 新值 '+newVal + ' 旧值 '+oldVal)
+                //alert('这里是User组件 新值 '+newVal + ' 旧值 '+oldVal)
                 if(newVal ==true){  // 确认退出
                     this.poem_list = "";
                     this.modal_title = "";

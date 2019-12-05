@@ -5,7 +5,7 @@
 #!frontend/config/*.js
 #!frontend/static/.gitkeep
 *.pyc
-.idea/workspace.xml
+.idea/
 # ----过滤后端相关文件
 backend/fuck_poe/data/
 backend/fuck_poe/poetry_models

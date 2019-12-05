@@ -174,7 +174,7 @@ export default {
           $('#login').click();
         },
         login:function () {
-          alert(this.login_user+"=="+this.login_passwd);
+          //alert(this.login_user+"=="+this.login_passwd);
           axios.post('/api/login/',{
               username: this.login_user,
               passward: this.login_passwd
@@ -204,7 +204,7 @@ export default {
             console.log(response)
         },
         quiet:function () {
-            alert(this.login_user)
+            //alert(this.login_user)
             axios.get('/api/quit/',{
                 params:{
                     username: this.login_user

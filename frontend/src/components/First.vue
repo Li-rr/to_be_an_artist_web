@@ -67,7 +67,7 @@
         methods: {
             geneary: function () {
                 this.message = '生成中。。。'
-                alert(this.title+" "+this.genre);
+                //alert(this.title+" "+this.genre);
                 axios.get('/api/gen/', {
                     params: {
                         title: this.title,
@@ -123,11 +123,12 @@
                     this.holder = "请输入1~4个字"
             },
             childQuitFirst: function (newVal,oldVal) {
-                alert('这里是First组件 新值 '+newVal + ' 旧值 '+oldVal)
+                //alert('这里是First组件 新值 '+newVal + ' 旧值 '+oldVal)
                 if(newVal == true){ // 需要退出
                     this.message = "";
                     this.title = "";
                     this.holder = "请输入关键词";
+                    this.show = false;
                 }
             }
         },

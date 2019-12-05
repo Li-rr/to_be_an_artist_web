@@ -16,7 +16,7 @@
 <!--              <textarea>{{item}}</textarea>-->
 <!--            </td>-->
             <td v-bind:poem_item_id="i_index"  class="text-wrapper" v-for="(item,i_index) in poemItem">{{item}}</td>
-            <td><button class="btn-primary btn" @click="edit_btn(index,poem_list)"> 修改</button></td>
+            <td><button class="btn-primary btn" data-toggle="modal" dat data-target="#editModal" @click="edit_btn(index,poem_list)"> 修改</button></td>
             <td><button class="btn-primary btn" @click="del_btn(index)">删除</button>{{index}}</td>
           </tr>
           </tbody>
@@ -24,6 +24,32 @@
       </div>
 <!--      <h1>用户名：{{childUserName}}</h1>-->
 <!--      <h1>{{childUser}}</h1>-->
+
+<!--      定义模态框-->
+        <!-- 模态框 -->
+      <div class="modal fade" id="editModal">
+     <div class="modal-dialog">
+      <div class="modal-content">
+
+        <!-- 模态框头部 -->
+        <div class="modal-header">
+          <h4 class="modal-title" >{{modal_title}}</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- 模态框主体 -->
+        <div class="modal-body">
+          模态框内容..
+        </div>
+
+        <!-- 模态框底部 -->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
     </div>
 </template>
 
@@ -35,6 +61,7 @@
           return{
               poem_list:"",
               title_list: "",
+              modal_title:""
           }
         },
         methods:{
@@ -66,8 +93,10 @@
                 for (var i=0;i<poem_list.length;i++){
                     if (index == i){
                         alert(poem_list[i])
+                        var p_content = poem_list[i]
                     }
                 }
+                this.modal_title = p_content[0]
                 alert("这里是编辑按钮=》",index)
             }
         },

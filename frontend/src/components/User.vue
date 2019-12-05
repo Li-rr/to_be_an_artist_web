@@ -167,11 +167,24 @@
             //alert("-> "+this.$route.query.username)
             //this.msg = this.$route.query.username
         },
-        props:['childUser','childUserName'],
+        props:['childUser','childUserName','childQuitUser'],
         watch: {
             // 监听属性
             childUser:function (newVal,oldVal) {
                 //alert('新值 '+newVal + ' 旧值 '+oldVal)
+            },
+            // 监听是否退出
+            childQuitUser:function (newVal,oldVal) {
+                alert('这里是User组件 新值 '+newVal + ' 旧值 '+oldVal)
+                if(newVal ==true){  // 确认退出
+                    this.poem_list = "";
+                    this.modal_title = "";
+                    this.modal_title = "";
+                    this.modal_content = "";
+                    this.edit_content = "";
+                    this.edit_index = "";
+                    this.id_list = "";
+                }
             }
         }
 

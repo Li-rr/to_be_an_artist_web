@@ -110,9 +110,9 @@
     <!--    这里是分隔线-->
 <!--    这里是分隔线-->
     <!-- 引入组件 fuck you vue-->
-    <first :childFirst="login_user"></first>
+    <first :childFirst="login_user" :childQuitFirst="quit_btn"></first>
     <!--    引入组件 User-->
-    <user :childUser="deal_user" :childUserName="login_user"></user>
+    <user :childUser="deal_user" :childUserName="login_user" :childQuitUser="quit_btn"></user>
     <router-view/>
   </div>
 </template>
@@ -135,7 +135,8 @@ export default {
           childFirst: "fuck",
           deal_user:"",
           displayQuitBtn: false,
-          displayLoginBtn: true
+          displayLoginBtn: true,
+          quit_btn: false,
       }
     },
     methods:{
@@ -195,6 +196,7 @@ export default {
                 this.deal_user = true
                 console.log("deal_user  "+this.deal_user)
                 this.displayLoginBtn = false
+                this.quit_btn = false
                 //this.$router.push('/user?username='+this.login_user); //页面重定向
             }else if(response.data.status==0){
                 alert("登录失败，用户名或密码错误")
@@ -210,8 +212,10 @@ export default {
             }).then(res=>{
                 console.log(res)
                 if(res.data.status == 2){
-                    this.displayLoginBtn = true
-                    this.deal_user = false
+                    this.displayLoginBtn = true;
+                    this.deal_user = false;
+                    this.quit_btn = true;
+                    this.login_user = "";
                     alert("退出成功")
                 }else if(res.data.status == 3){
                     alert("退出遇到点问题，请关闭浏览器")

@@ -104,7 +104,13 @@
                             user: this.childFirst
                         }
                     }).then(res=>{
-                        console.log(res)
+                        if(res.data.status == 1){
+                            alert("保存成功")
+                        }else if (res.data.status==2){
+                            alert("遇到bug了，保存失败")
+                        }
+                    }).catch(err=>{
+                        alert("遇到bug了")
                     })
                 }
             }
@@ -115,10 +121,17 @@
                     this.holder = "请输入关键词"
                 else if (this.genre == '2')
                     this.holder = "请输入1~4个字"
-
+            },
+            childQuitFirst: function (newVal,oldVal) {
+                alert('这里是First组件 新值 '+newVal + ' 旧值 '+oldVal)
+                if(newVal == true){ // 需要退出
+                    this.message = "";
+                    this.title = "";
+                    this.holder = "请输入关键词";
+                }
             }
         },
-        props:['childFirst'],
+        props:['childFirst','childQuitFirst'],
         //生命周期函数
         mounted() {
             //alert(this.childFirst)

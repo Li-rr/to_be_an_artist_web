@@ -152,7 +152,7 @@ def quit(request):
 def queryAll(request):
     status = 0
     user = request.GET.get('username')
-    name = request.session['刘正']
+    name = request.session[user]
     print("session->",name)
     print('查询的用户',user)
 

@@ -1,7 +1,7 @@
 <template>
-  <div id="app">
+  <div id="app" class="">
     <nav class="navbar navbar-expand-sm bg-dark navbar-dark row">
-      <div class="col-sm-6 col-md-8 col-lg-10"><a class="navbar-brand ">To be an artist</a></div>
+      <div class="col-sm-6 col-md-8 col-lg-10"><h3 class="text-info">To be an artist</h3></div>
       <div class="col-sm-6 col-md-4 col-lg-2  ">
         <button class="btn btn-outline-info justify-content-end" v-show="displayLoginBtn" id="login" data-toggle="modal"
                 data-target="#login-modal">登录

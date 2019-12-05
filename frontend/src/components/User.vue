@@ -16,8 +16,8 @@
 <!--              <textarea>{{item}}</textarea>-->
 <!--            </td>-->
             <td v-bind:poem_item_id="i_index"  class="text-wrapper" v-for="(item,i_index) in poemItem">{{item}}</td>
-            <td><button class="btn-primary btn" data-toggle="modal" dat data-target="#editModal" @click="edit_btn(index,poem_list)"> 修改</button></td>
-            <td><button class="btn-primary btn" @click="del_btn(index)">删除</button>{{index}}</td>
+            <td><button class="btn-outline-primary btn" data-toggle="modal" dat data-target="#editModal" @click="edit_btn(index,poem_list)"> 修改</button></td>
+            <td><button class="btn-outline-primary btn" @click="del_btn(index)">删除</button>{{index}}</td>
           </tr>
           </tbody>
         </table>
@@ -28,7 +28,7 @@
 <!--      定义模态框-->
         <!-- 模态框 -->
       <div class="modal fade" id="editModal">
-     <div class="modal-dialog">
+     <div class="modal-dialog modal-lg">
       <div class="modal-content">
 
         <!-- 模态框头部 -->
@@ -39,11 +39,15 @@
 
         <!-- 模态框主体 -->
         <div class="modal-body">
-          模态框内容..
+          <h4 v-for="item in modal_content">{{item}}</h4>
+          <hr>
+          <textarea class="form-control" rows="5" v-model="edit_content">
+          </textarea>
         </div>
 
         <!-- 模态框底部 -->
         <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" v-on:click="edit_submit_btn">提交</button>
           <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
         </div>
 
@@ -61,7 +65,10 @@
           return{
               poem_list:"",
               title_list: "",
-              modal_title:""
+              modal_title:"",
+              modal_content: "",
+              edit_content: ""
+
           }
         },
         methods:{
@@ -92,12 +99,23 @@
             edit_btn:function (index,poem_list) {
                 for (var i=0;i<poem_list.length;i++){
                     if (index == i){
-                        alert(poem_list[i])
+                        //alert(poem_list[i])
                         var p_content = poem_list[i]
                     }
                 }
+                // 创建数组，设诗的总长度为x，每一段的长度为4/x
+                var fuck_poem_container = p_content[1].split('\n')
+                for (var i=0; i<fuck_poem_container.length;i++){
+                    console.log("===>",fuck_poem_container[i])
+                }
+
                 this.modal_title = p_content[0]
-                alert("这里是编辑按钮=》",index)
+                this.modal_content = fuck_poem_container
+                this.edit_content = p_content[1]
+                //alert("这里是编辑按钮=》",index)
+            },
+            edit_submit_btn:function () {
+                alert(this.edit_content)
             }
         },
         mounted() {
@@ -114,9 +132,6 @@
         }
 
     };
-    // $(function() {     $("button").click(function () {
-    //     alert("fuck => "+ $(this).text())
-    // }); })
 </script>
 
 <style scoped>

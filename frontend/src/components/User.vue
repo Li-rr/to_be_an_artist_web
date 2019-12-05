@@ -10,12 +10,14 @@
         </tr>
         </thead>
           <tbody>
-          <tr v-for="poemItem in poem_list">
-            <td class="text-wrapper" v-for="item in poemItem">{{item}}</td>
-<!--            <td class="text-wrapper">{{titleItem}}</td>-->
-<!--            <td class="text-wrapper">{{poemItem}}</td>-->
-            <td><button class="btn-primary btn"> 修改</button></td>
-            <td><button class="btn-primary btn">删除</button></td>
+
+          <tr v-bind:poem_id="index" v-for="(poemItem,index) in poem_list" :key="index">
+<!--            <td  class="text-wrapper" v-for="(item,i_index) in poemItem">-->
+<!--              <textarea>{{item}}</textarea>-->
+<!--            </td>-->
+            <td v-bind:poem_item_id="i_index"  class="text-wrapper" v-for="(item,i_index) in poemItem">{{item}}</td>
+            <td><button class="btn-primary btn" @click="edit_btn(index,poem_list)"> 修改</button></td>
+            <td><button class="btn-primary btn" @click="del_btn(index)">删除</button>{{index}}</td>
           </tr>
           </tbody>
         </table>
@@ -56,6 +58,17 @@
                     alert("出现严重错误")
                     console.log(err)
                 })
+            },
+            del_btn:function (index) {
+                alert("这里是删除按钮=》",index)
+            },
+            edit_btn:function (index,poem_list) {
+                for (var i=0;i<poem_list.length;i++){
+                    if (index == i){
+                        alert(poem_list[i])
+                    }
+                }
+                alert("这里是编辑按钮=》",index)
             }
         },
         mounted() {
@@ -71,7 +84,10 @@
             }
         }
 
-    }
+    };
+    // $(function() {     $("button").click(function () {
+    //     alert("fuck => "+ $(this).text())
+    // }); })
 </script>
 
 <style scoped>

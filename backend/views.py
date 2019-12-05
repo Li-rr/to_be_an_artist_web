@@ -20,6 +20,7 @@ def index(request):
 
 def gen_f_poetry(request):
     keywords = request.GET.get('title')
+    choice = request.GET.get('choice')
 
     # 加载数据
     int_text, vocab_to_int,int_to_vocab = \
@@ -28,13 +29,26 @@ def gen_f_poetry(request):
     # 加载模型
     gen_network = poetry_network(vocab_size=len(int_to_vocab),batch_size=1)
     gen_network.model.build()
-
-    poem = gen_poetry(
-        restore_net=gen_network,vocab_to_int=vocab_to_int,
-        int_to_vocab=int_to_vocab,top_n=10,
-        rule=7,sentence_lines=4,hidden_head=keywords
+    print("===>",choice,type(choice))
+    poem = ""
+    status = 11
+    if choice == "1":
+        poem = gen_poetry(restore_net=gen_network,prime_word=keywords,
+                          vocab_to_int=vocab_to_int,int_to_vocab=int_to_vocab,
+                          rule=7,sentence_lines=4,top_n=10)
+        status = 10
+    elif choice == "2":
+        poem = gen_poetry(
+            restore_net=gen_network,vocab_to_int=vocab_to_int,
+            int_to_vocab=int_to_vocab,top_n=10,
+            rule=7,sentence_lines=4,hidden_head=keywords
+        )
+        status = 10
+    res_dict = dict(
+        status= status,
+        poem = poem
     )
-    return HttpResponse(poem)
+    return JsonResponse(res_dict)
 
 def token(request):
     token = get_token(request=request)

@@ -1,23 +1,25 @@
 <template>
-    <div id="user" v-show="childUser" class="container">
-      <div class="jumbotron">
-        <table class="table">
+    <div id="user" v-show="childUser" class="jumbotron">
+      <div class="">
+        <table class="table table-hover table-condensed text-center">
+
         <thead>
+        <tr><th colspan="4"><h4>用户使用记录</h4></th></tr>
         <tr>
-          <th>欢迎用户：</th>
-          <th>{{childUserName}}</th>
-          <th><button id="queryAll" class="btn btn-primary" v-on:click="queryAll">点击查询</button></th>
+          <th><h4>欢迎用户：</h4></th>
+          <th><h4>{{childUserName}}</h4></th>
+          <th colspan="2"><button id="queryAll" class="btn btn-primary" v-on:click="queryAll">点击查询</button></th>
         </tr>
         </thead>
           <tbody>
 
-          <tr v-bind:poem_id="index" v-for="(poemItem,index) in poem_list" :key="index">
+          <tr class="text-center" v-bind:poem_id="index" v-for="(poemItem,index) in poem_list" :key="index">
 <!--            <td  class="text-wrapper" v-for="(item,i_index) in poemItem">-->
 <!--              <textarea>{{item}}</textarea>-->
 <!--            </td>-->
             <td v-bind:poem_item_id="i_index"  class="text-wrapper" v-for="(item,i_index) in poemItem">{{item}}</td>
             <td><button class="btn-outline-primary btn" data-toggle="modal" dat data-target="#editModal" @click="edit_btn(index,poem_list)"> 修改</button></td>
-            <td><button class="btn-outline-primary btn" @click="del_btn(index)">删除</button>{{index}}</td>
+            <td><button class="btn-outline-primary btn" @click="del_btn(index)">删除</button></td>
           </tr>
           </tbody>
         </table>

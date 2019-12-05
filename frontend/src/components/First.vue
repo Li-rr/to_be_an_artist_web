@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h1>Fuck: {{childFirst}}</h1>
+  <div class="">
+    <br/>
     <div class="container">
       <div id="input" class="from">
         <div class="row">
@@ -16,7 +16,7 @@
               <input class="form-control" type="text" v-model="title" :placeholder="holder">
             </div>
             <div class="col-lg-2 col-md-4 col-sm-6">
-              <span class="input-group-btn"><button v-on:click="geneary" class="btn btn-outline-secondary">点击生成</button></span>
+              <span class="input-group-btn"><button v-on:click="geneary" class="btn btn-lg btn-outline-secondary">点击生成</button></span>
             </div>
 
           </div>
@@ -29,14 +29,14 @@
         <h3 class="bg-info text-white text-center" >生成结果</h3>
       </div>
       <div id="output" class="text-center">
-        <table class="table">
+        <table class="table ">
         <thead>
         <tr><th><h1> 标题：{{title}}</h1></th></tr>
         </thead>
           <tbody>
           <tr>
             <td>
-              <p v-model="message">{{message}}</p>
+              <h4 v-model="message">{{message}}</h4>
             </td>
           </tr>
           <tr> <td><button class="btn btn-outline-secondary" v-show="show" v-on:click="save">保存</button></td></tr>
@@ -67,20 +67,31 @@
         methods: {
             geneary: function () {
                 this.message = '生成中。。。'
-                alert(this.title);
+                alert(this.title+" "+this.genre);
                 axios.get('/api/gen/', {
                     params: {
-                        title: this.title
+                        title: this.title,
+                        choice: this.genre
                     }
-                }).then(this.getGeninfo)
+                }).then(this.getGeninfo).catch(err=>{
+                    this.message = "我们遇到了一点问题，换个关键词试试"
+                    this.show = true
+                })
             },
             getGeninfo: function (res) {
                 console.log(res)
-                this.message = res.data
+                console.log(res.data.status)
+                if(res.data.status==10){
+                    console.log("生成成功")
+                    this.message = res.data.poem
+                }else if(res.data.status==11){
+                    alert("遇到了一点问题")
+                    this.message = "再试一次"
+                }
                 this.show=true
             },
             save: function () {
-                alert(this.childFirst)
+                // alert(this.childFirst)
                 if(this.childFirst == "")
                 {
                     alert("请先登录")
@@ -116,5 +127,7 @@
 </script>
 
 <style scoped>
-
+.no-border {
+  border: 1px solid transparent !important;
+}
 </style>

@@ -130,9 +130,13 @@ def save(request):
     new_content.username = user
     new_content.title = title
     new_content.content = content
-    new_content.save()
-    res_dict = dict(
+    try:
+        new_content.save()
         status = 1
+    except Exception as e:
+        status = 0
+    res_dict = dict(
+        status = status
     )
     return JsonResponse(res_dict)
 

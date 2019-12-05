@@ -97,7 +97,22 @@
                 })
             },
             del_btn:function (index) {
-                alert("这里是删除按钮=》",index)
+                alert("这里是删除按钮=》"+index)
+                for(var i=0; i < this.id_list.length;i++){
+                    if(i==index){
+                        //alert(this.id_list[i]+" "+this.title_list[i])
+                        var del_id = this.id_list[i];
+                    }
+                }
+                axios.get('/api/delrecord/',{
+                    params:{
+                        id: del_id
+                    }
+                }).then(this.getSuccessInfo).catch(err=>{
+                    alert("出现了严重错误");
+                    console.log(err);
+                })
+
             },
             edit_btn:function (index,poem_list) {
                 for (var i=0;i<poem_list.length;i++){
@@ -133,9 +148,14 @@
             getSuccessInfo:function (res) {
                 if(res.data.status==6){
                     //alert("修改成功")
-                    $('#edit_btn_dismiss').click();
-                    $('#queryAll').click();
+                    $('#edit_btn_dismiss').click(); // 关闭模态框
+                    $('#queryAll').click(); //重新查询
                 }else if(res.data.status==7){
+                    alert("我们遇到了一点问题")
+                }else if(res.data.status==8){
+                    alert("删除成功")
+                     $('#queryAll').click(); //重新查询
+                }else if(res.data.status==9){
                     alert("我们遇到了一点问题")
                 }
             }

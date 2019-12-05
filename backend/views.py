@@ -138,6 +138,8 @@ def quit(request):
 def queryAll(request):
     status = 0
     user = request.GET.get('username')
+    name = request.session['刘正']
+    print("session->",name)
     print('查询的用户',user)
 
     try:
@@ -205,6 +207,20 @@ def isave(request):
             print(result)
         except Exception as e:
             status = 7
+    res_dict = dict(
+        status = status
+    )
+    return JsonResponse(res_dict)
+
+def delrecord(request):
+    id = request.GET.get('id')
+
+    print('古诗id->',id)
+    try:
+        UserGen.objects.get(id=id).delete()
+        status = 8
+    except Exception as e:
+        status = 9
     res_dict = dict(
         status = status
     )

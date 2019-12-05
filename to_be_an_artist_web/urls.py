@@ -31,4 +31,5 @@ urlpatterns = [
     path(r'api/quit/',back_view.quit,name='quit'),
     path(r'api/queryAll/',back_view.queryAll,name='queryAll'),
     path(r'api/isave/',back_view.isave,name='isave'),
+    path(r'api/delrecord/',back_view.delrecord,name='delrecord'),
 ]

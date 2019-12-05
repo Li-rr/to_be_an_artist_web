@@ -141,13 +141,14 @@ def queryAll(request):
     print('查询的用户',user)
 
     try:
-        poem_result = UserGen.objects.all().filter(username=user)
-        print(poem_result,type(poem_result))
+        poem_result = UserGen.objects.all().values_list().filter(username=user)
+        #print(poem_result,type(poem_result))
         poem_list = []
         title_list = []
         complete_poen = []
+        id_list = []
         for poem in poem_result:
-            _, title,content = poem.getData()
+            id,_,content,title = poem
             content = content.replace(' ', '')
             #print(title,content)
             poem = content.replace('，','\n')
@@ -155,12 +156,14 @@ def queryAll(request):
             #poem = re.split('，|。',content)
             #print(content.replace(' ','').split('， 。'))
             #print(title,poem,type(title),type(poem))
-            print(poem)
+            #print(poem)
             #poem.insert(0,title)
-            print(poem)
+            #print(poem)
+            # print(id,type(id))
             title_list.append(title)
             poem_list.append(poem)
             complete_poen.append([title,poem])
+            id_list.append(id)
 
         status = 4
     except Exception as e:
@@ -178,3 +181,18 @@ def queryAll(request):
 
     #res_dict['poem'] = poem_list
     return JsonResponse(res_dict)
+
+def isave(request):
+    user = request.GET.get('username')
+    result_set = UserGen.objects.all()\
+        .values_list().filter(id=2)
+    complete_poem = []
+    id_list = []
+    for poem in result_set:
+        id,_,content,title = poem
+        print(poem)
+        print(id,content,title)
+    res_dict = dict(
+        status = 6
+    )
+    return HttpResponse("hello")
